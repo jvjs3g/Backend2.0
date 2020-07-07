@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 
 import Transaction from '../models/Transaction';
+import { Request } from 'express-serve-static-core';
 
 interface Balance {
   income: number;
@@ -10,8 +11,15 @@ interface Balance {
 
 @EntityRepository(Transaction)
 class TransactionsRepository extends Repository<Transaction> {
-  public async getBalance(): Promise<Balance> {
+  public async getBalance({income, outcome, total}:Balance): Promise<Balance> {
     // TODO
+
+  return {
+    income,
+    outcome,
+    total:income-outcome,
+  }
+
   }
 }
 
