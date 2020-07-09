@@ -36,14 +36,14 @@ class CreateTransactionService {
 
     const transactionRepository = getCustomRepository(TransactionRepository);
 
-    /*
+
     const { total } = await transactionRepository.getBalance();
 
     if (type === 'outcome' && total - value < 0) {
       throw new AppError('Balance Error');
     }
 
-    */
+
 
 
     const transaction = transactionRepository.create({

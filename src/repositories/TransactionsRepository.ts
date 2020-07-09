@@ -18,14 +18,14 @@ class TransactionsRepository extends Repository<Transaction> {
 
     const income = transactions.reduce((previous, current) => {
       if(current.type == 'income'){
-        return previous + current.value;
+        return previous + Number(current.value);
       }
       return previous;
     },0);
 
     const outcome = transactions.reduce((previous, current) => {
       if(current.type == 'outcome'){
-        return previous + current.value;
+        return previous + Number(current.value);
       }
 
       return previous;
