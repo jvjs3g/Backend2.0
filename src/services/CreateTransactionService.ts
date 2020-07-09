@@ -1,29 +1,61 @@
-import { getRepository } from 'typeorm';
-import AppError from '../errors/AppError';
+// import AppError from '../errors/AppError';
+import { getCustomRepository, getRepository } from 'typeorm';
 import Transaction from '../models/Transaction';
-import TransactionsRepository from '../repositories/TransactionsRepository';
+import Category from '../models/Category';
 
+import TransactionRepository from '../repositories/TransactionsRepository';
+import AppError from '../errors/AppError';
 
-interface Request{
-  title:string;
-  value:number;
-  type:'income'|'outcome';
-  category_id:string;
+interface Request {
+  title: string;
+  value: number;
+  type: 'income' | 'outcome';
+  category: string;
 }
+
 class CreateTransactionService {
-  public async execute({title, value,type, category_id} :Request): Promise<Transaction> {
+  public async execute({
+    title,
+    value,
+    type,
+    category,
+  }: Request): Promise<Transaction> {
     // TODO
+    const categoryRepository = getRepository(Category);
+    let findCategory = await categoryRepository.findOne({
+      where: { title: category },
+    });
 
-    const transactionRepository = getRepository(Transaction);
+    if (!findCategory) {
+      findCategory = await categoryRepository.create({
+        title: category,
+      });
 
-     const transaction = await transactionRepository.create({
-       title,
-       value,
-       type,
-       category_id
-     });
+      await categoryRepository.save(findCategory);
+    }
 
-     return transaction;
+    const transactionRepository = getCustomRepository(TransactionRepository);
+
+    /*
+    const { total } = await transactionRepository.getBalance();
+
+    if (type === 'outcome' && total - value < 0) {
+      throw new AppError('Balance Error');
+    }
+
+    */
+
+
+    const transaction = transactionRepository.create({
+      title,
+      value,
+      type,
+      category: findCategory,
+    });
+
+    await transactionRepository.save(transaction);
+
+    return transaction;
   }
 }
 
