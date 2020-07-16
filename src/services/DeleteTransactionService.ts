@@ -1,6 +1,4 @@
-import { getCustomRepository, getRepository } from 'typeorm';
-
-import TransactionsRepository from "../repositories/TransactionsRepository";
+import { getRepository } from 'typeorm';
 import Transaction from '../models/Transaction';
 
 class DeleteTransactionService {

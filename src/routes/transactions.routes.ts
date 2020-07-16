@@ -14,17 +14,17 @@ const upload = multer(uploadConfig);
 const transactionsRouter = Router();
 
 transactionsRouter.get('/', async (request, response) => {
-   const transactionsRepository = getCustomRepository(TransactionsRepository);
-   const transactions = await transactionsRepository.find();
+  const transactionsRepository = getCustomRepository(TransactionsRepository);
+  const transactions = await transactionsRepository.find();
 
-   const balance = await transactionsRepository.getBalance();
+  const balance = await transactionsRepository.getBalance();
 
-   const transactionsList = {
-     transactions,
-     balance
-   }
+  const transactionsList = {
+    transactions,
+    balance
+  }
 
-   return response.json(transactionsList);
+  return response.json(transactionsList);
 });
 
 
@@ -35,14 +35,14 @@ transactionsRouter.post('/', async (request, response) => {
 
   const newTransaction = await createTransaction.execute({ title, value, type, category });
 
-  response.status(200).json(newTransaction);  
+  response.status(200).json(newTransaction);
 });
 
 
 transactionsRouter.delete('/:id', async (request, response) => {
   const { id } = request.params;
   const deleteTransaction = new DeleteTransactionService();
-  
+
   await deleteTransaction.execute(id)
 
   response.status(201).send();
@@ -50,11 +50,11 @@ transactionsRouter.delete('/:id', async (request, response) => {
 
 
 transactionsRouter.post('/import', upload.single('file'), async (request, response) => {
-  const { filename } = request.file; 
+  const { filename } = request.file;
   const importTransactions = new ImportTransactionsService();
 
   const transactions = await importTransactions.execute(filename);
-   
+
   return response.status(200).json(transactions);
 });
 

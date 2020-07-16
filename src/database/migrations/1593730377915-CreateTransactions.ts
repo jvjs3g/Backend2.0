@@ -7,7 +7,7 @@ export default class CreateTransactions1593730377915 implements MigrationInterfa
             new Table({
                 name: 'transactions',
                 columns: [
-                    {  
+                    {
                         name: 'id',
                         type: 'uuid',
                         isPrimary: true,
@@ -44,7 +44,7 @@ export default class CreateTransactions1593730377915 implements MigrationInterfa
             })
         );
     }
-    
+
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropTable('transactions');

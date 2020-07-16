@@ -1,11 +1,9 @@
-
+import { getCustomRepository, getRepository, In } from 'typeorm';
 import fs from 'fs';
 import path from 'path';
 import parse from 'csv-parse';
-
 import Transaction from '../models/Transaction';
 import fileUploadConfig from '../config/fileUploadConfig';
-import { getCustomRepository, getRepository, In } from 'typeorm';
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import Category from '../models/Category';
 
@@ -91,8 +89,8 @@ class ImportTransactionsService {
       await transactionsRepository.save(createdTransactions);
       await fs.promises.unlink(filePath);
 
-      return createdTransactions; 
-  } 
+      return createdTransactions;
+  }
 
   /* public async execute(filename: string): Promise<Transaction[]> {
       const transactionsRepository = getCustomRepository(TransactionsRepository);
@@ -165,7 +163,7 @@ class ImportTransactionsService {
       await transactionsRepository.save(createdTransactions);
       await fs.promises.unlink(filePath);
 
-      return createdTransactions; 
+      return createdTransactions;
   }  */
 
 }
