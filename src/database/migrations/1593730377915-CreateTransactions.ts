@@ -28,7 +28,8 @@ export default class CreateTransactions1593730377915 implements MigrationInterfa
                     },
                     {
                         name: 'category_id',
-                        type: 'varchar'
+                        type: 'varchar',
+
                     },
                     {
                         name: 'created_at',
